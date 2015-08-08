@@ -22,8 +22,8 @@ function removeFiles() {
 		@unlink($cwd.'/myfile.compile.output');
 	}
 
-	if (file_exists($cwd.'/myfile.exe')) {
-		@unlink($cwd.'/myfile.exe');
+	if (file_exists($cwd.'/myfile.out')) {
+		@unlink($cwd.'/myfile.out');
 	}
 
 	if (file_exists($cwd.'/output.txt')) {
@@ -54,11 +54,11 @@ $compiler_descriptorspec = array(
    2 => array("file", "{$cwd}error-output.txt", "w") // stderr is a file to write to
 );
 
-if(file_exists($cwd.'myfile.exe')) {
-	@unlink($cwd.'myfile.exe');
+if(file_exists($cwd.'myfile.out')) {
+	@unlink($cwd.'myfile.out');
 }
 
-$process = proc_open('g++ file.cpp -O2 -o myfile.exe -ftime-report -fmem-report', $compiler_descriptorspec, $pipes, $cwd);
+$process = proc_open('g++ file.cpp -O2 -o myfile.out -ftime-report -fmem-report', $compiler_descriptorspec, $pipes, $cwd);
 // Validate the compiler output
 if (is_resource($process)) {
     $return_value = proc_close($process);
@@ -86,7 +86,7 @@ $descriptorspec = array(
 $start_time = time();
 
 // Start the program execution
-$process = proc_open('myfile.exe', $descriptorspec, $pipes, $cwd, $env);
+$process = proc_open('myfile.out', $descriptorspec, $pipes, $cwd, $env);
 
 // Time to sleep, for the program to complete
 usleep($time_limit*1000);
@@ -99,7 +99,7 @@ if($status['running']) {
 	kill($status['pid']);
 	proc_terminate($process);
 
-	@unlink($cwd.'myfile.exe');
+	@unlink($cwd.'myfile.out');
 	echo json_encode(array(
 			'type' => 'ERROR',
 			'content' => 'Time limit exceeded'
