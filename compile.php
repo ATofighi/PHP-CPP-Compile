@@ -6,6 +6,7 @@ function kill($pid){
 
 function removeFiles() {
 	global $cwd;
+	print_r(scandir($cwd));
 	if (file_exists($cwd.'/error-output.txt')) {
 		@unlink($cwd.'/error-output.txt');
 	}
@@ -46,6 +47,10 @@ $env = array();
 $start_time = 0;
 // End time of the script
 $end_time = 1;
+
+print_r(scandir('./'));
+print_r(scandir('./_compile'));
+print_r(scandir($cwd));
 
 
 $compiler_descriptorspec = array(
