@@ -1,4 +1,6 @@
-<form method="post">
+<?php
+echo php_uname('s');
+?><form method="post">
 <textarea name="code" cols="20" rows="5"></textarea>
 <br>
 <input type="submit">
