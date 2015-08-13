@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL^E_NOTICE);
-/* ?>
+ ?>
 <form method="post">
 	<textarea name="code" style="width: 100%;height: 100px;" placeholder="CODE"><?php echo htmlspecialchars($_POST['code']); ?></textarea>
 	<textarea name="input" style="width: 100%;height: 100px;" placeholder="Input"><?php echo htmlspecialchars($_POST['input']); ?></textarea>
