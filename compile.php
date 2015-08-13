@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL^E_NOTICE);
- ?>
+/* ?>
 <form method="post">
 	<textarea name="code" style="width: 100%;height: 100px;" placeholder="CODE"><?php echo htmlspecialchars($_POST['code']); ?></textarea>
 	<textarea name="input" style="width: 100%;height: 100px;" placeholder="Input"><?php echo htmlspecialchars($_POST['input']); ?></textarea>
@@ -97,7 +97,7 @@ if($_POST['code']) {
 	$start_time = time();
 
 	// Start the program execution
-	$process = proc_open("ulimit -Sv {$memory_limit}\nLD_PRELOAD={$path}/sandbox/EasySandbox.so {$cwd}/myfile.out", $descriptorspec, $pipes, $cwd, $env);
+	$process = proc_open("ulimit -Sv {$memory_limit};\nLD_PRELOAD={$path}/sandbox/EasySandbox.so {$cwd}/myfile.out", $descriptorspec, $pipes, $cwd, $env);
 
 	// Time to sleep, for the program to complete
 	usleep($time_limit*1000);
@@ -123,7 +123,11 @@ if($_POST['code']) {
 		$end_time = time();
 		// echo "Total Time taken - " . date('H:m:s', $end_time - $start_time);
 //		echo $return_value;
-		list($enteringSECCOMPmode, $command_output) = explode("\n", str_replace("\r\n", "\n", rtrim(trim(file_get_contents($cwd.'output.txt')))), 2);
+		$command_output = str_replace("\r\n", "\n", rtrim(trim(file_get_contents($cwd.'output.txt'))));
+		if(substr($command_output, 0, 26) == "<<entering SECCOMP mode>>\n") {
+			$command_output = substr($command_output, 26);
+		}
+
 		if($return_value == 0 || $command_output) {
 			echo json_encode(array(
 					'type' => 'SUCCESS',
