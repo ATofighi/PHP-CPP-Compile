@@ -69,7 +69,7 @@ if($_POST['code']) {
 	);
 
 
-	$process = proc_open('g++ file.cpp -O2 -o myfile.out -ftime-report -fmem-report', $compiler_descriptorspec, $pipes, $cwd);
+	$process = proc_open('g++ file.cpp -std=c++11 -O2 -o myfile.out', $compiler_descriptorspec, $pipes, $cwd);
 	// Validate the compiler output
 	if (is_resource($process)) {
 	    $return_value = proc_close($process);
